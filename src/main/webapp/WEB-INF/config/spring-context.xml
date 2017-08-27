@@ -1,0 +1,125 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:mvc="http://www.springframework.org/schema/mvc"
+       xmlns:p="http://www.springframework.org/schema/p"
+       xmlns:context="http://www.springframework.org/schema/context" xmlns:tx="http://www.springframework.org/schema/tx"
+       xmlns:aop="http://www.springframework.org/schema/aop"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans  http://www.springframework.org/schema/beans/spring-beans.xsd
+        http://www.springframework.org/schema/mvc http://www.springframework.org/schema/mvc/spring-mvc.xsd
+        http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx.xsd http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop.xsd">
+
+    <context:component-scan base-package="com.bmf"/>
+
+    <tx:annotation-driven proxy-target-class="true"/>
+
+    <bean id="hikariDataSource"
+          class="com.zaxxer.hikari.HikariDataSource" destroy-method="close">
+        <constructor-arg>
+            <bean class="com.zaxxer.hikari.HikariConfig">
+                <property name="driverClassName" value="${hikaricp.jdbc.driverClassName}"/>
+                <property name="jdbcUrl" value="${hikaricp.url}"/>
+                <property name="username" value="${hikaricp.username}"/>
+                <property name="password" value="${hikaricp.password}"/>
+                <property name="connectionTestQuery" value="${hikaricp.connectionTestQuery}"/>
+                <property name="connectionTimeout" value="${hikaricp.connectionTimeout}"/>
+                <property name="idleTimeout" value="${hikaricp.idleTimeout}"/>
+                <property name="maxLifetime" value="${hikaricp.maxLifetime}"/>
+                <property name="maximumPoolSize" value="${hikaricp.maximumPoolSize}"/>
+                <property name="minimumIdle" value="${hikaricp.minimumIdle}"/>
+            </bean>
+        </constructor-arg>
+    </bean>
+
+    <bean class="org.springframework.jdbc.datasource.DataSourceTransactionManager" id="dataSourceTransactionManager"
+          p:dataSource-ref="hikariDataSource"
+          p:rollbackOnCommitFailure="true"/>
+
+    <bean class="org.springframework.jdbc.core.JdbcTemplate" id="jdbcTemplate"
+          p:dataSource-ref="hikariDataSource"
+          p:lazyInit="true"
+          p:queryTimeout="30"/>
+          <!--p:maxRows="3000"-->
+
+    <tx:advice id="txAdvice" transaction-manager="dataSourceTransactionManager">
+        <tx:attributes>
+            <tx:method name="get*" read-only="true"/>
+            <tx:method name="update*" isolation="DEFAULT" propagation="REQUIRED" rollback-for="java.lang.Exception"/>
+        </tx:attributes>
+    </tx:advice>
+
+    <aop:config>
+        <aop:pointcut id="pointcut" expression="execution(* com.bmf.sevice.*.*(..))"/>
+        <aop:advisor advice-ref="txAdvice" pointcut-ref="pointcut"/>
+    </aop:config>
+
+    <bean id="multipartResolver" class="org.springframework.web.multipart.commons.CommonsMultipartResolver">
+        <property name="maxUploadSize">
+            <value>1000000</value>
+        </property>
+        <property name="defaultEncoding">
+            <value>UTF-8</value>
+        </property>
+    </bean>
+
+    <!-- 处理请求返回json字符串的中文乱码问题 -->
+    <mvc:annotation-driven>
+        <mvc:message-converters>
+            <bean class="org.springframework.http.converter.StringHttpMessageConverter">
+                <constructor-arg value="UTF-8"/>
+                <property name="defaultCharset" value="UTF-8"/>
+                <property name="supportedMediaTypes">
+                    <list>
+                        <value>application/json;charset=UTF-8</value>
+                    </list>
+                </property>
+            </bean>
+        </mvc:message-converters>
+    </mvc:annotation-driven>
+
+    <context:property-placeholder location="WEB-INF/config/*.properties" order="1" ignore-unresolvable="true"/>
+
+    <!--redis连接池配置-->
+    <bean class="redis.clients.jedis.JedisPoolConfig" id="jedisPoolConfig"
+          p:maxTotal="${redis.pool.maxTotal}"
+          p:maxWaitMillis="${redis.pool.maxWait}"
+          p:minIdle="${redis.pool.minIdle}"
+          p:maxIdle="${redis.pool.maxIdle}"
+          p:testOnBorrow="${redis.pool.testOnBorrow}"/>
+
+    <bean name="jedisConnectionFactory" class="org.springframework.data.redis.connection.jedis.JedisConnectionFactory"
+          p:hostName="${redis.host-name}"
+          p:password="${redis.pwd}"
+          p:port="${redis.port}"
+          p:usePool="true"
+          p:database="${redis.database}"
+          p:timeout="${redis.timeout}"
+          p:poolConfig-ref="jedisPoolConfig"/>
+
+    <bean name="jdkSerializationRedisSerializer"
+          class="org.springframework.data.redis.serializer.JdkSerializationRedisSerializer"/>
+
+    <bean name="redisTemplate" class="org.springframework.data.redis.core.RedisTemplate"
+          p:connectionFactory-ref="jedisConnectionFactory"/>
+
+    <bean id="redisCacheManager" class="org.springframework.data.redis.cache.RedisCacheManager">
+        <constructor-arg index="0" ref="redisTemplate"/>
+    </bean>
+    <!--p:enableTransactionSupport="true"-->
+    <!--/>-->
+    <mvc:interceptors>
+        <mvc:interceptor>
+            <mvc:mapping path="/**"/>
+            <mvc:exclude-mapping path="/resources/**"/>
+            <bean class="com.bmf.interceptor.CommonInterceptor"/>
+        </mvc:interceptor>
+    </mvc:interceptors>
+
+    <mvc:default-servlet-handler/>
+
+    <bean class="org.springframework.web.servlet.view.InternalResourceViewResolver"
+          p:prefix="/WEB-INF/jsp/"
+          p:suffix=".jsp"
+          p:viewClass="org.springframework.web.servlet.view.JstlView"
+          p:contentType="text/html;charset=UTF-8"/>
+</beans>
