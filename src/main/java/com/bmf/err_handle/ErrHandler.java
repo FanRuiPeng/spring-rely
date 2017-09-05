@@ -16,12 +16,12 @@ public class ErrHandler {
 
     private final static Logger log = LoggerFactory.getLogger(ErrHandler.class);
 
-        @ExceptionHandler(Exception.class)
+    @ExceptionHandler(Exception.class)
     public String handlerException(HttpServletRequest request, Exception e) {
         StringBuffer url = request.getRequestURL();
         log.error("error url ============> " + url);
         e.printStackTrace();
-        log.error("error caused by :{}" + e.getMessage());
+        log.error("error caused by :({}-{})", e.getMessage(), e.getStackTrace());
         if (e instanceof NoHandlerFoundException) {
             return "err_page/page_404";
         }

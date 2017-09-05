@@ -1,4 +1,4 @@
-package com.bmf.model;
+package com.bmf.model.base;
 
 import java.io.Serializable;
 import java.time.LocalDateTime;
@@ -10,7 +10,7 @@ public class DataWrapper<T> implements Serializable {
     private static final long serialVersionUID = -6871356768669393367L;
     private int status;
     private String msg;
-    private LocalDateTime time;
+    private long time;
     private T data;
 
     public DataWrapper() {
@@ -39,11 +39,11 @@ public class DataWrapper<T> implements Serializable {
         return this;
     }
 
-    public LocalDateTime getTime() {
+    public long getTime() {
         return time;
     }
 
-    public DataWrapper setTime(LocalDateTime time) {
+    public DataWrapper setTime(long time) {
         this.time = time;
         return this;
     }
@@ -65,8 +65,8 @@ public class DataWrapper<T> implements Serializable {
         DataWrapper<?> that = (DataWrapper<?>) o;
 
         if (status != that.status) return false;
+        if (time != that.time) return false;
         if (msg != null ? !msg.equals(that.msg) : that.msg != null) return false;
-        if (time != null ? !time.equals(that.time) : that.time != null) return false;
         return data != null ? data.equals(that.data) : that.data == null;
     }
 
@@ -74,7 +74,7 @@ public class DataWrapper<T> implements Serializable {
     public int hashCode() {
         int result = status;
         result = 31 * result + (msg != null ? msg.hashCode() : 0);
-        result = 31 * result + (time != null ? time.hashCode() : 0);
+        result = 31 * result + (int) (time ^ (time >>> 32));
         result = 31 * result + (data != null ? data.hashCode() : 0);
         return result;
     }

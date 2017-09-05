@@ -1,7 +1,7 @@
 package com.bmf.server;
 
-import com.bmf.model.DataWrapper;
-import com.bmf.sevice.JdbcService;
+import com.bmf.model.base.DataWrapper;
+import com.bmf.service.JdbcService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -20,7 +20,9 @@ public class JdbcController {
     @RequestMapping(value = "/test")
     @ResponseBody
     public DataWrapper<Object> test() {
-        return jdbcService.updateTest();
+        return jdbcService.test();
+//        jdbcService.updateJdbc();
+//        return null;
     }
 }
 
