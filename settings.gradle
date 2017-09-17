@@ -1,2 +1,6 @@
 rootProject.name = 'spring'
-
+//includeFlat 'util'
+//include 'groovy_tools'
+include 'groovy_tools'
+include 'java_tools'
+include 'web_main'
