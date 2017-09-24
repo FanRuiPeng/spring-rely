@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+        http://www.springframework.org/schema/beans/spring-beans.xsd">
+
+    <!--<bean id="accountDao"-->
+    <!--class="org.springframework.samples.jpetstore.dao.jpa.JpaAccountDao">-->
+    <!--&lt;!&ndash; additional collaborators and configuration for this bean go here &ndash;&gt;-->
+    <!--</bean>-->
+
+    <!--<bean id="itemDao" class="org.springframework.samples.jpetstore.dao.jpa.JpaItemDao">-->
+    <!--&lt;!&ndash; additional collaborators and configuration for this bean go here &ndash;&gt;-->
+    <!--</bean>-->
+
+    <bean class="java.lang.Integer" id="integer">
+        <constructor-arg index="0" value="1"/>
+    </bean>
+    
+    <alias name="integer" alias="for" />
+
+    <!-- more bean definitions for data access objects go here -->
+
+</beans>
