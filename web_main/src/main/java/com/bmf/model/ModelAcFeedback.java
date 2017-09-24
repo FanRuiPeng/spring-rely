@@ -1,6 +1,7 @@
 package com.bmf.model;
 
 import com.bmf.model.base.BaseModel;
+import javafx.util.Builder;
 import org.springframework.jdbc.core.RowMapper;
 
 import java.sql.ResultSet;
@@ -27,6 +28,49 @@ public class ModelAcFeedback extends BaseModel {
     public final static String FI_FeedbackTime = "feedbackTime";
     public final static String FI_Feedbacker = "feedbacker";
     public final static String FI_FeedbackType = "feedbackType";
+
+    public ModelAcFeedback(ModelBuilder modelBuilder) {
+        super();
+        this.feedbackConcatMsg = modelBuilder.feedbackConcatMsg;
+        this.feedbackContent = modelBuilder.feedbackConcatMsg;
+        this.feedbacker = modelBuilder.feedbacker;
+        this.feedbackTel = modelBuilder.feedbackTel;
+        this.feedbackId = modelBuilder.feedbackId;
+        this.feedbackTime = modelBuilder.feedbackTime;
+        this.feedbackType = modelBuilder.feedbackType;
+    }
+
+    public static class ModelBuilder implements Builder<ModelAcFeedback> {
+        private Integer feedbackId;
+        private String feedbackContent;
+        private String feedbackConcatMsg;
+        private String feedbackTel;
+        private Date feedbackTime = new Date();
+        private String feedbacker;
+        private Integer feedbackType = 0;
+
+        public ModelBuilder(String feedbackContent, String feedbackConcatMsg, String feedbackTel, String feedbacker) {
+            this.feedbackContent = feedbackContent;
+            this.feedbackConcatMsg = feedbackConcatMsg;
+            this.feedbackTel = feedbackTel;
+            this.feedbacker = feedbacker;
+        }
+
+        public ModelBuilder feedbackTime(Date feedbackTime) {
+            this.feedbackTime = feedbackTime;
+            return this;
+        }
+
+        public ModelBuilder feedbackType(Integer feedbackType) {
+            this.feedbackType = feedbackType;
+            return this;
+        }
+
+        @Override
+        public ModelAcFeedback build() {
+            return new ModelAcFeedback(this);
+        }
+    }
 
     public ModelAcFeedback() {
     }

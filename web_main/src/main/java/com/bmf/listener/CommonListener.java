@@ -3,6 +3,7 @@ package com.bmf.listener;
 import org.apache.log4j.PropertyConfigurator;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.util.ResourceUtils;
 import org.springframework.web.context.ContextLoaderListener;
 
 import javax.servlet.ServletContext;
@@ -23,8 +24,17 @@ public class CommonListener extends ContextLoaderListener {
         logger.info("********************************content init****************************************************");
         ServletContext servletContext = event.getServletContext();
         String log4jConfigLocation = servletContext.getInitParameter("log4jConfigLocation");
-        String log4jRealPath = servletContext.getRealPath(log4jConfigLocation);
-        try (InputStream inputStream = new FileInputStream(new File(log4jRealPath))) {
+//        String log4jRealPath = servletContext.getRealPath(log4jConfigLocation);
+//        if (log4jConfigLocation.startsWith("classpath")) {
+//            try {
+//                File file = ResourceUtils.getFile(log4jConfigLocation);
+//                System.out.println(file.getPath());
+//            } catch (FileNotFoundException e) {
+//                e.printStackTrace();
+//            }
+//            log4jRealPath = Thread.currentThread().getContextClassLoader().getResource("/").getPath() + log4jConfigLocation.split(":")[1];
+//        }
+        try (InputStream inputStream = new FileInputStream(ResourceUtils.getFile(log4jConfigLocation))) {
             PropertyConfigurator.configure(inputStream);
         } catch (FileNotFoundException e) {
             e.printStackTrace();
@@ -34,7 +44,7 @@ public class CommonListener extends ContextLoaderListener {
             logger.error(">>>>>>>>>>>>>>>>>>>log4j config load error");
         }
         String servletRealPath = servletContext.getRealPath("");
-        logger.info("****************servletRealPath:[{}]",servletRealPath);
+        logger.info("****************servletRealPath:[{}]", servletRealPath);
 
         super.contextInitialized(event);
     }

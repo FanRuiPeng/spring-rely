@@ -5,6 +5,7 @@ import com.bmf.model.base.DataWrapper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Required;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
 import org.springframework.stereotype.Service;
@@ -28,8 +29,14 @@ public class JdbcService {
 
     private static final Logger logger = LoggerFactory.getLogger(JdbcService.class);
 
-    @Autowired
+//    @Autowired
     private JdbcTemplate jdbcTemplate;
+
+    @Required
+    public JdbcService setJdbcTemplate(JdbcTemplate jdbcTemplate) {
+        this.jdbcTemplate = jdbcTemplate;
+        return this;
+    }
 
     @Autowired
     private TransactionTemplate transactionTemplate;
@@ -78,7 +85,10 @@ public class JdbcService {
 //                    status.rollbackToSavepoint(savepoint);
 //                }
 //            }
-//        });
+//        }
+        ModelAcFeedback acFeedback = new ModelAcFeedback.ModelBuilder("1", "2", "3", "4")
+                .feedbackTime(new Date()).feedbackType(1).build();
+
         updateJdbc();
 
 //        myWay();
