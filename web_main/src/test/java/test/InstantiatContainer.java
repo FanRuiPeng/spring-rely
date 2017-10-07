@@ -25,6 +25,9 @@ public class InstantiatContainer {
 //            Object bean = applicationContext.getBean(str);
 //            System.out.println(bean);
 //        }
+        float a = 1.4f;
+        double b = 1.4;
+        System.out.println(a == b);
         Integer integer = applicationContext.getBean("integer", Integer.TYPE);
         Integer fors = applicationContext.getBean("for", Integer.TYPE);
         System.out.println(integer);

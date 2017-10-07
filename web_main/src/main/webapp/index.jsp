@@ -5,13 +5,31 @@
   Time: 10:42
   To change this template use File | Settings | File Templates.
 --%>
-<%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ page contentType="text/html;charset=UTF-8" language="java" import="java.util.Map" %>
 <html>
 <head>
     <title>哈哈</title>
     <link href="/resources/libs/dist/min/dropzone.min.css" rel="stylesheet">
+    <meta http-equiv="refresh" content="5">
 </head>
 <body>
+
+<pre>
+    <%
+        for (Map.Entry<Thread, StackTraceElement[]> stackTrace : Thread.getAllStackTraces().entrySet()) {
+            Thread thread = stackTrace.getKey();
+            StackTraceElement[] stack = stackTrace.getValue();
+            if(thread.equals(Thread.currentThread())) {
+                continue;
+            }
+            out.print("\n线程：" + thread.getName() + "\n");
+            for(StackTraceElement element: stack) {
+                out.print("\t" + element + "\n");
+            }
+        }
+    %>
+</pre>
+
 <form action="/sv1/upload/picture" method="post"
       class="dropzone"
       id="myAwesomeDropzone">
@@ -35,9 +53,9 @@
         accept: function (file, done) {
             done();
         },
-        init:function () {
+        init: function () {
             $("#myAwesomeDropzone").append('<button id="uploadBtn" type="submit" class="btn btn-primary pull-right">确认上传</button>');
-            $("#uploadBtn").on("click",function (e) {
+            $("#uploadBtn").on("click", function (e) {
                 myAwesomeDropzone.processQueue();
             });
         },

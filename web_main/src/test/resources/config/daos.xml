@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <beans xmlns="http://www.springframework.org/schema/beans"
-       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:c="http://www.springframework.org/schema/c"
        xsi:schemaLocation="http://www.springframework.org/schema/beans
         http://www.springframework.org/schema/beans/spring-beans.xsd">
 
@@ -13,8 +13,8 @@
     <!--&lt;!&ndash; additional collaborators and configuration for this bean go here &ndash;&gt;-->
     <!--</bean>-->
 
-    <bean class="java.lang.Integer" id="integer">
-        <constructor-arg index="0" value="1"/>
+    <bean class="java.lang.Integer" id="integer" c:_0="1">
+        <!--<constructor-arg index="0" value="1"/>-->
     </bean>
     
     <alias name="integer" alias="for" />

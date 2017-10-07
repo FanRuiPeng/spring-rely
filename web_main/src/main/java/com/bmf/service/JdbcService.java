@@ -4,8 +4,15 @@ import com.bmf.model.ModelAcFeedback;
 import com.bmf.model.base.DataWrapper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.BeansException;
+import org.springframework.beans.factory.BeanClassLoaderAware;
+import org.springframework.beans.factory.BeanFactory;
+import org.springframework.beans.factory.BeanFactoryAware;
+import org.springframework.beans.factory.BeanNameAware;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.beans.factory.annotation.Required;
+import org.springframework.context.ApplicationContext;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
 import org.springframework.stereotype.Service;
@@ -16,30 +23,59 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.transaction.support.TransactionCallbackWithoutResult;
 import org.springframework.transaction.support.TransactionTemplate;
 
+import javax.annotation.PostConstruct;
+import javax.annotation.PreDestroy;
 import java.sql.Types;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.stream.Stream;
 
 /**
  * Created by BMF on 2017/8/20.
  */
 @Service
-public class JdbcService {
+@SuppressWarnings(value = {"unchecked"})
+@Qualifier("jdbc")
+public class JdbcService implements BeanNameAware, BeanFactoryAware, BeanClassLoaderAware {
+
+    @Autowired
+    private ApplicationContext applicationContext;
+
+    @PostConstruct
+    public void init() {
+        System.out.println(this.getClass().getName() + "is loading");
+        System.out.println(beanName);
+        System.out.println(beanFactory.getBean(JdbcService.class).beanName);
+        System.out.println(classLoader.getClass().getName());
+    }
+
+    @PreDestroy
+    public void destory() {
+        System.out.println(this.getClass().getName() + "is destoryed");
+    }
 
     private static final Logger logger = LoggerFactory.getLogger(JdbcService.class);
 
 //    @Autowired
     private JdbcTemplate jdbcTemplate;
 
-    @Required
-    public JdbcService setJdbcTemplate(JdbcTemplate jdbcTemplate) {
+    @Autowired
+    public JdbcService(JdbcTemplate jdbcTemplate) {
         this.jdbcTemplate = jdbcTemplate;
-        return this;
     }
 
-    @Autowired
-    private TransactionTemplate transactionTemplate;
+    public JdbcService() {
+    }
+
+    //    @Required
+//    public JdbcService setJdbcTemplate(JdbcTemplate jdbcTemplate) {
+//        this.jdbcTemplate = jdbcTemplate;
+//        return this;
+//    }
+
+//    @Autowired
+//    private TransactionTemplate transactionTemplate;
 
     public DataWrapper<Object> test() {
 //        int update = jdbcTemplate.update("update common_account.ac_feedback set feedbackContent = \"test\" where  feedbackId = 19;");
@@ -66,6 +102,7 @@ public class JdbcService {
 //        for (int i = 0; i < 10; i++) {
 //            System.out.println(ModelAcFeedback.Mapper.getRowMapper());
 //        }
+        Stream.of(applicationContext.getBeanDefinitionNames()).parallel().forEach(System.out::println);
 //        jdbcTemplate.up
         if (logger.isDebugEnabled()) {
 //            logger.debug(maps.size() + "");
@@ -131,5 +168,27 @@ public class JdbcService {
         Map<String, Object> stringObjectMap = namedParameterJdbcTemplate.queryForMap(" SELECT * FROM common_account.ac_base_info WHERE ubInfoId = :ubInfoId ; ",
                 hashMap);
         return new DataWrapper<>(1, "succ").setData(stringObjectMap);
+    }
+
+    private String beanName;
+    private BeanFactory beanFactory;
+    private ClassLoader classLoader;
+
+    //获取当前bean的name
+    @Override
+    public void setBeanName(String name) {
+        beanName = name;
+    }
+
+    //获取当前类的工厂
+    @Override
+    public void setBeanFactory(BeanFactory beanFactory) throws BeansException {
+        this.beanFactory = beanFactory;
+    }
+
+    //获取当前类的类加载器
+    @Override
+    public void setBeanClassLoader(ClassLoader classLoader) {
+        this.classLoader = classLoader;
     }
 }

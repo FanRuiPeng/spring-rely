@@ -6,7 +6,7 @@
        xsi:schemaLocation="http://www.springframework.org/schema/beans  http://www.springframework.org/schema/beans/spring-beans.xsd
         http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd ">
 
-    <context:property-placeholder location="classpath:/config/redis.properties" order="1" ignore-unresolvable="true"/>
+    <context:property-placeholder location="classpath:/config/redis.properties" order="1"/>
 
     <!--redis连接池配置-->
     <bean class="redis.clients.jedis.JedisPoolConfig" id="jedisPoolConfig"
@@ -23,9 +23,10 @@
           p:usePool="true"
           p:database="${redis.database}"
           p:timeout="${redis.timeout}"
-          p:poolConfig-ref="jedisPoolConfig"/>
+          p:poolConfig-ref="jedisPoolConfig" destroy-method="destroy" depends-on="jedisPoolConfig"/>
 
-    <bean name="jdkSerializationRedisSerializer"
+    <!--primary 当有两个相同的bean注入时 注入这个-->
+    <bean name="jdkSerializationRedisSerializer" primary="true"
           class="org.springframework.data.redis.serializer.JdkSerializationRedisSerializer"/>
 
     <bean name="redisTemplate" class="org.springframework.data.redis.core.RedisTemplate"
@@ -34,4 +35,10 @@
     <bean id="redisCacheManager" class="org.springframework.data.redis.cache.RedisCacheManager">
         <constructor-arg index="0" ref="redisTemplate"/>
     </bean>
+
+    <bean id="parent" class="com.bmf.tools.Parent" abstract="true" p:single="aa" p:to="bb"/>
+
+    <bean class="com.bmf.tools.Child" id="child" parent="parent" p:single="ab"/>
+
+    <bean class="com.bmf.test.InstantiationTracingBeanPostProcessor" />
 </beans>

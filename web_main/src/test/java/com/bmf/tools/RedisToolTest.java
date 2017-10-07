@@ -45,6 +45,9 @@ public class RedisToolTest {
     public void after() throws Exception {
     }
 
+    @Autowired
+    private Child child;
+
     /**
      * Method: put(String key, String value, Long time)
      */
@@ -53,11 +56,13 @@ public class RedisToolTest {
     public void testPut() throws Exception {
 //TODO: Test goes here...
 
-        Properties properties = System.getProperties();
-        Enumeration<Object> elements = properties.elements();
-        while (elements.hasMoreElements()) {
-            System.out.println(elements.nextElement());
-        }
+        child.get();
+
+//        Properties properties = System.getProperties();
+//        Enumeration<Object> elements = properties.elements();
+//        while (elements.hasMoreElements()) {
+//            System.out.println(elements.nextElement());
+//        }
 //        String[] beanDefinitionNames = applicationContext.getBeanDefinitionNames();
 //        for (String str : beanDefinitionNames) {
 //            System.out.println(str);
