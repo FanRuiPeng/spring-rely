@@ -28,3 +28,6 @@ hs_err_pid*
 .idea/libraries/Gradle__org_springframework_spring_webmvc_4_3_3_RELEASE.xml
 /.idea
 /build
+/.gradle/2.12-rc-1/taskArtifacts
+/.gradle/4.1/fileChanges
+/.gradle/4.1/fileContent

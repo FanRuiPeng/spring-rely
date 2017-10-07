@@ -45,8 +45,51 @@ public class NoVisibility {
 //        System.out.println(b == c);//false
 //        System.out.println(b == d);//true
 //        System.out.println(c == d);//true
-        String a = "java";
-        String b = new String("java");
+//        String a = "java";
+//        String b = new String("java");
+        System.out.println(-1L >>> -1024L);
+
+
+//        boolean flag = true;
+//        flag &= true;
+//        System.out.println("true\t&=\ttrue\t==>\t" + flag);
+//        flag = true;
+//        flag &= false;
+//        System.out.println("true\t&=\tfalse\t==>\t" + flag);
+//        flag = false;
+//        flag &= true;
+//        System.out.println("false\t&=\ttrue\t==>\t" + flag);
+//        flag = false;
+//        flag &= false;
+//        System.out.println("false\t&=\tfalse\t==>\t" + flag+"\n");
+//
+//        flag = true;
+//        flag |= true;
+//        System.out.println("true\t|=\ttrue\t==>\t" + flag);
+//        flag = true;
+//        flag |= false;
+//        System.out.println("true\t|=\tfalse\t==>\t" + flag);
+//        flag = false;
+//        flag |= true;
+//        System.out.println("false\t|=\ttrue\t==>\t" + flag);
+//        flag = false;
+//        flag |= false;
+//        System.out.println("false\t|=\tfalse\t==>\t" + flag+"\n");
+//
+//        System.out.println("^=  相同为真，不同为假");
+//        flag = true;
+//        flag ^= true;
+//        System.out.println("true\t^=\ttrue\t==>\t" + flag);
+//        flag = true;
+//        flag ^= false;
+//        System.out.println("true\t^=\tfalse\t==>\t" + flag);
+//        flag = false;
+//        flag ^= true;
+//        System.out.println("false\t^=\ttrue\t==>\t" + flag);
+//        flag = false;
+//        flag ^= false;
+//        System.out.println("false\t^=\tfalse\t==>\t" + flag);
+
 
     }
 }
