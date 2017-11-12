@@ -31,3 +31,13 @@ hs_err_pid*
 /.gradle/2.12-rc-1/taskArtifacts
 /.gradle/4.1/fileChanges
 /.gradle/4.1/fileContent
+/.gradle/4.1/fileHashes
+/.gradle/4.1/taskHistory
+/.gradle/buildOutputCleanup/*.bin
+/groovy_tools/build
+/java_tools/build
+/java_tools/out
+/out
+/web_main/out
+/web_main/build
+/.gradle

@@ -6,6 +6,8 @@ import org.junit.After;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationContext;
+import org.springframework.context.MessageSource;
+import org.springframework.context.support.ClassPathXmlApplicationContext;
 import org.springframework.data.redis.core.BoundHashOperations;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.test.annotation.DirtiesContext;
@@ -14,6 +16,7 @@ import org.springframework.test.context.junit4.SpringRunner;
 import com.bmf.func.TestBeanInterface;
 
 import java.util.Enumeration;
+import java.util.Locale;
 import java.util.Properties;
 
 /**
@@ -26,7 +29,7 @@ import java.util.Properties;
 //@ContextConfiguration("../conf/spring-test.xml")
 //@DirtiesContext
 @RunWith(SpringRunner.class)
-@TestPropertySource(properties = {"a = 1", "b = 2"})
+//@TestPropertySource(properties = {"a = 1", "b = 2"})
 @TestBeanInterface
 public class RedisToolTest {
 
@@ -56,7 +59,13 @@ public class RedisToolTest {
     public void testPut() throws Exception {
 //TODO: Test goes here...
 
-        child.get();
+//        child.get();
+        System.out.println("----------------"+ child.getResource().getFilename());
+        MessageSource messageSource = new ClassPathXmlApplicationContext("config/spring-test.xml");
+        String message = messageSource.getMessage("show.name", new Object[]{"张三"}, "required", Locale.CHINA);
+        System.out.println(message);
+        message = messageSource.getMessage("show.name", null, "required", Locale.ENGLISH);
+        System.out.println(message);
 
 //        Properties properties = System.getProperties();
 //        Enumeration<Object> elements = properties.elements();

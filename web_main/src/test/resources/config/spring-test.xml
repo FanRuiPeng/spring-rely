@@ -3,10 +3,26 @@
        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
        xmlns:p="http://www.springframework.org/schema/p"
        xmlns:context="http://www.springframework.org/schema/context"
+       xmlns:aop="http://www.springframework.org/schema/aop"
        xsi:schemaLocation="http://www.springframework.org/schema/beans  http://www.springframework.org/schema/beans/spring-beans.xsd
-        http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd ">
+        http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop.xsd">
 
     <context:property-placeholder location="classpath:/config/redis.properties" order="1"/>
+
+    <context:component-scan base-package="com.bmf.aspect, com.bmf.tools, com.bmf.func"/>
+
+    <aop:aspectj-autoproxy/>
+
+    <bean class="com.bmf.aspect.NotVeryUsefulAspect" id="notVeryUsefulAspect"/>
+
+    <bean id="messageSource"
+          class="org.springframework.context.support.ResourceBundleMessageSource">
+        <property name="basenames">
+            <list>
+                <value>messages/windows</value>
+            </list>
+        </property>
+    </bean>
 
     <!--redis连接池配置-->
     <bean class="redis.clients.jedis.JedisPoolConfig" id="jedisPoolConfig"
@@ -38,7 +54,8 @@
 
     <bean id="parent" class="com.bmf.tools.Parent" abstract="true" p:single="aa" p:to="bb"/>
 
-    <bean class="com.bmf.tools.Child" id="child" parent="parent" p:single="ab"/>
+    <bean class="com.bmf.tools.Child" id="child" parent="parent" p:single="ab"
+          p:resource="http://zhuangdan.oss-cn-beijing.aliyuncs.com/video/shilian33tian.mp4"/>
 
-    <bean class="com.bmf.test.InstantiationTracingBeanPostProcessor" />
+    <!--<bean class="com.bmf.test.InstantiationTracingBeanPostProcessor"/>-->
 </beans>

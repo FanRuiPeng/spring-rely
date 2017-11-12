@@ -13,6 +13,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.beans.factory.annotation.Required;
 import org.springframework.context.ApplicationContext;
+import org.springframework.context.ResourceLoaderAware;
+import org.springframework.core.io.ResourceLoader;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
 import org.springframework.stereotype.Service;
@@ -37,7 +39,7 @@ import java.util.stream.Stream;
 @Service
 @SuppressWarnings(value = {"unchecked"})
 @Qualifier("jdbc")
-public class JdbcService implements BeanNameAware, BeanFactoryAware, BeanClassLoaderAware {
+public class JdbcService implements BeanNameAware, BeanFactoryAware, BeanClassLoaderAware, ResourceLoaderAware {
 
     @Autowired
     private ApplicationContext applicationContext;
@@ -48,6 +50,7 @@ public class JdbcService implements BeanNameAware, BeanFactoryAware, BeanClassLo
         System.out.println(beanName);
         System.out.println(beanFactory.getBean(JdbcService.class).beanName);
         System.out.println(classLoader.getClass().getName());
+        System.out.println(resourceLoader.getClassLoader());
     }
 
     @PreDestroy
@@ -173,6 +176,7 @@ public class JdbcService implements BeanNameAware, BeanFactoryAware, BeanClassLo
     private String beanName;
     private BeanFactory beanFactory;
     private ClassLoader classLoader;
+    private ResourceLoader resourceLoader;
 
     //获取当前bean的name
     @Override
@@ -190,5 +194,10 @@ public class JdbcService implements BeanNameAware, BeanFactoryAware, BeanClassLo
     @Override
     public void setBeanClassLoader(ClassLoader classLoader) {
         this.classLoader = classLoader;
+    }
+
+    @Override
+    public void setResourceLoader(ResourceLoader resourceLoader) {
+        this.resourceLoader = resourceLoader;
     }
 }

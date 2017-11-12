@@ -3,8 +3,17 @@ package com.bmf.test;
 import com.bmf.tools.Man;
 import com.bmf.tools.SubMan;
 import com.bmf.tools.Week;
+import it.sauronsoftware.jave.Encoder;
+import it.sauronsoftware.jave.EncoderException;
+import it.sauronsoftware.jave.MultimediaInfo;
 import org.junit.Test;
+import org.springframework.core.io.Resource;
+import org.springframework.core.io.UrlResource;
 
+import java.io.File;
+import java.io.IOException;
+import java.net.MalformedURLException;
+import java.net.URL;
 import java.util.*;
 import java.util.concurrent.Executors;
 import java.util.stream.Stream;
@@ -49,6 +58,17 @@ public class JunitTest {
 
     }
 
+    @Test
+    public void ResourceTest() throws IOException, EncoderException, ClassNotFoundException, IllegalAccessException, InstantiationException {
+//        UrlResource urlResource = new UrlResource(new URL("http://zhuangdan.oss-cn-beijing.aliyuncs.com/video/shilian33tian.mp4"));
+//        File file = urlResource.getFile();
+//        if(file.exists()) {
+//            MultimediaInfo info = new Encoder().getInfo(file);
+//            System.out.println(info.toString());
+//        }
+        Class<?> aClass = this.getClass().getClassLoader().loadClass("D:\\IDEAworkspace\\main\\build\\classes\\java\\main\\com\\code_space\\support\\im\\rong\\util\\ArraySplit.class");
+        Object o = aClass.newInstance();
+    }
 
 
     public static Set union(Set s1, Set s2) {
