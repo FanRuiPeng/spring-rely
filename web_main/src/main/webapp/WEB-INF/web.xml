@@ -29,6 +29,7 @@
             <param-name>listings</param-name>
             <param-value>true</param-value>
         </init-param>
+        <async-supported>true</async-supported>
     </servlet>
     <session-config>
         <session-timeout>120</session-timeout>
@@ -41,6 +42,7 @@
     <filter>
         <filter-name>characterEncoding</filter-name>
         <filter-class>com.bmf.filter.CharacterFilter</filter-class>
+        <async-supported>true</async-supported>
         <init-param>
             <param-name>encoding</param-name>
             <param-value>UTF-8</param-value>

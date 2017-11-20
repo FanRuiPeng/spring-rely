@@ -97,7 +97,7 @@
     </bean>
 
     <!-- 处理请求返回json字符串的中文乱码问题 -->
-    <mvc:annotation-driven conversion-service="conversionService">
+    <mvc:annotation-driven enable-matrix-variables="true" conversion-service="conversionService">
         <mvc:message-converters>
             <bean class="org.springframework.http.converter.StringHttpMessageConverter">
                 <constructor-arg value="UTF-8"/>

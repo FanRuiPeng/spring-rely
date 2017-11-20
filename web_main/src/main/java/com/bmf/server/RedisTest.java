@@ -3,7 +3,11 @@ package com.bmf.server;
 import com.bmf.tools.RedisTool;
 import com.util.calculate.Calculate;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.MediaType;
 import org.springframework.stereotype.Controller;
+import org.springframework.util.MultiValueMap;
+import org.springframework.web.bind.annotation.MatrixVariable;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
@@ -29,14 +33,26 @@ public class RedisTest {
         return redisTool.get(a);
     }
 
-    @RequestMapping(value = "/test")
+    //http://localhost/sv1/bmf/test/1;b=3
+    @RequestMapping(value = "/test/{a}")
     @ResponseBody
-    public Object test(Integer a, Integer b) {
+    public Object test(@PathVariable Integer a, @MatrixVariable(name = "b") Integer b) {
         Integer add = Calculate.add(a, b);
         User u = new User();
         u.setId(add);
         u.setName("张三");
         return u;
+    }
+
+    //
+    @RequestMapping(value = "/{var1}/test/{var2}", params = "myParam=myValue"
+//            , headers = "myParam=myValue"
+//            ,consumes = "application/json", produces = MediaType.APPLICATION_JSON_UTF8_VALUE
+    )
+    @ResponseBody
+    public Object test2(@MatrixVariable MultiValueMap<String, Object> a,
+                        @MatrixVariable(pathVar = "var2") MultiValueMap<String, Object> b) {
+        return a + ":" + b;
     }
 
     private class User {
