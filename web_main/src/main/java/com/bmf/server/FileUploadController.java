@@ -7,7 +7,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.servlet.ModelAndView;
 
+import javax.servlet.http.Part;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -23,12 +25,13 @@ public class FileUploadController {
 
     @RequestMapping(name = "图片上传", value = "/picture")
     @ResponseBody
-    public Object picture(@RequestParam(required = false, value = "multipartFile") MultipartFile[] multipartFile) {
+//    public Object picture(@RequestParam(required = false, value = "multipartFile") MultipartFile[] multipartFile) {
+    public Object picture(@RequestParam(required = false, value = "multipartFile") Part[] multipartFile) {
         List<String> file = new ArrayList<>();
         if (multipartFile != null && multipartFile.length > 0) {
             for (int i = 0; i < multipartFile.length; i++) {
-                logger.info(multipartFile[i].getOriginalFilename());
-                file.add(multipartFile[i].getOriginalFilename());
+                logger.info(multipartFile[i].getSubmittedFileName());
+                file.add(multipartFile[i].getSubmittedFileName());
             }
         }
         UrlList urlList = new UrlList();
@@ -50,5 +53,10 @@ public class FileUploadController {
             this.file = file;
             return this;
         }
+    }
+
+    @RequestMapping("/page")
+    public ModelAndView page() {
+        return new ModelAndView("upload");
     }
 }

@@ -12,13 +12,20 @@ import org.springframework.util.MultiValueMap;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.method.annotation.ResponseBodyEmitter;
 import org.springframework.web.servlet.mvc.method.annotation.StreamingResponseBody;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
+import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
+import org.springframework.web.util.UriComponents;
+import org.springframework.web.util.UriComponentsBuilder;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.OutputStream;
+import java.net.URI;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
@@ -189,5 +196,77 @@ public class MvcTest {
                 }
             }
         };
+    }
+
+    @RequestMapping("/mutli")
+    public ModelAndView multi() {
+        ModelAndView modelAndView = new ModelAndView();
+        modelAndView.setStatus(HttpStatus.OK);
+        modelAndView.setViewName("show");
+        modelAndView.addObject("user", new User().setId(1).setName("yiy"));
+        return modelAndView;
+    }
+
+    @RequestMapping("/mutil")
+    public User mutil() {
+        ModelAndView modelAndView = new ModelAndView();
+        User yiy = new User().setId(1).setName("yiy");
+        return yiy;
+    }
+
+    /**
+     * 重定向传值到下一个请求
+     *
+     * @param redirectAttributes
+     * @return
+     */
+    @RequestMapping("/flash1/{name}")
+    public String flash(RedirectAttributes redirectAttributes, @PathVariable String name) {
+        User user = new User().setId(1).setName(name);
+        redirectAttributes.addFlashAttribute("user", user);
+        return "redirect:/sv1/mvc/inner";
+    }
+
+    @RequestMapping("/flash2")
+    public String flash2(Model model) {
+        User user = new User().setId(1).setName("yiy");
+        model.addAttribute(user);
+        return "redirect:/sv1/mvc/inner";
+    }
+
+    @RequestMapping("/inner")
+    public String inner() {
+        return "show";
+    }
+
+    @RequestMapping("/buildurl")
+    public void buildurl(HttpServletRequest request) {
+        UriComponents uriComponents = UriComponentsBuilder.fromUriString(
+                "http://localhost/sv1/mvc/flash1/{name}").build();
+
+        URI uri = uriComponents.expand("张三").encode().toUri();
+        System.out.println(uri.toString());
+
+        uriComponents = UriComponentsBuilder.newInstance()
+                .scheme("http").host("localhost").path("/sv1/mvc/flash1/{name}").build()
+                .expand("42")
+                .encode();
+        System.out.println(uriComponents.toUriString());
+
+        uriComponents = ServletUriComponentsBuilder.fromRequest(request)
+                .replaceQueryParam("accountId", "{id}").build()
+                .expand("123")
+                .encode();
+        System.out.println(uriComponents.toUriString());
+
+        uriComponents = ServletUriComponentsBuilder.fromContextPath(request)
+                .path("/accounts").build().encode();
+        System.out.println(uriComponents.toUriString());
+
+        uriComponents = ServletUriComponentsBuilder.fromServletMapping(request)
+                .path("/accounts").build().encode();
+        System.out.println(uriComponents.toUriString());
+
+
     }
 }

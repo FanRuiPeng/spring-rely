@@ -4,6 +4,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.web.servlet.HandlerInterceptor;
 import org.springframework.web.servlet.ModelAndView;
+import org.springframework.web.servlet.handler.HandlerInterceptorAdapter;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -11,12 +12,13 @@ import javax.servlet.http.HttpServletResponse;
 /**
  * Created by BMF on 2017/6/10.
  */
-public class CommonInterceptor implements HandlerInterceptor {
+public class CommonInterceptor extends HandlerInterceptorAdapter {
 
     private final static Logger logger = LoggerFactory.getLogger(CommonInterceptor.class);
 
     @Override
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {
+        logger.info("I'm executing");
         return true;
     }
 
