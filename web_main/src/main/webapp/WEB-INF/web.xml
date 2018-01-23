@@ -49,6 +49,15 @@
         <url-pattern>/</url-pattern>
     </servlet-mapping>
 
+    <servlet>
+        <servlet-name>async</servlet-name>
+        <servlet-class>com.bmf.servlet.AsyncServlet</servlet-class>
+        <async-supported>true</async-supported>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>async</servlet-name>
+        <url-pattern>/sv1/async</url-pattern>
+    </servlet-mapping>
     <filter>
         <filter-name>characterEncoding</filter-name>
         <filter-class>com.bmf.filter.CharacterFilter</filter-class>
