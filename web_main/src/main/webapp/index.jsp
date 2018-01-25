@@ -84,17 +84,20 @@
 
         $("#add").click(function () {
             $.ajax({
-//                url:'/sv1/mvc/pages/1/show/haha',
-                url:'/sv1/mvc/pages.xml',
-                type:'post',
-                data:{
-                    id:1,
-                    name:"haha"
-                },
-                success:function (data) {
-                    console.log(data);
-                }
+                url:"",
             });
+//            $.ajax({
+////                url:'/sv1/mvc/pages/1/show/haha',
+//                url:'/sv1/mvc/pages.xml',
+//                type:'post',
+//                data:{
+//                    id:1,
+//                    name:"haha"
+//                },
+//                success:function (data) {
+//                    console.log(data);
+//                }
+//            });
         });
 
 //    $("#add").click(function () {
