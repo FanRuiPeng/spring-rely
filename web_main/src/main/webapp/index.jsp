@@ -83,8 +83,30 @@
     //    });
 
         $("#add").click(function () {
+
             $.ajax({
-                url:"",
+                url: "https://test123w.oss-cn-qingdao.aliyuncs.com/multipart.data?partNumber=0&uploadId=1BD4E4328E1944609A90CC95754A4E16",
+                type: 'PUT',
+                dataType: 'json',
+                //headers: {
+                //    Authorization: "OSS LTAIELdnUQGZOXRB:WGeKzldmxJvz8V6jVaSsRon5ndg=",
+                //    //"x-oss-server-side-encryption": "AES256",
+                //    "x-oss-date": (new Date()).toGMTString()
+                //},
+                beforeSend: function (xhr) {
+                    xhr.setRequestHeader("Authorization", "OSS LTAIELdnUQGZOXRB:faNPqnTZCnJgUK4u1utCZ/jM/Cg=");
+                    xhr.setRequestHeader("x-oss-date", "Sat, 27 Jan 2018 03:30:14 GMT");
+                    xhr.setRequestHeader("Date", "Sat, 27 Jan 2018 03:30:14 GMT");
+                    xhr.setRequestHeader("Content-Length", "6291456");
+                    console.log(xhr)
+                    console.log(xhr)
+                },
+                data: {
+                    "data": new File(["First Line Text", "Second Line Text"], "part1")
+                },
+                success: function (data) {
+                    console.log(data);
+                }
             });
 //            $.ajax({
 ////                url:'/sv1/mvc/pages/1/show/haha',
