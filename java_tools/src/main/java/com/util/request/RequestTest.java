@@ -18,8 +18,8 @@ public class RequestTest {
         try {
 //            URL url = new URI("http", "www.tsingteng.com", "/sv1/launch/launch", null).toURL();
 //            URL url = new URL("http://www.tsingteng.com/sv1/launch/launch");
-//            URL url = new URL("http://www.tsingteng.com/sv1/auth/authParam");
-            URL url = new URL("https://test123w.oss-cn-qingdao.aliyuncs.com/multipart.data?uploads");
+            URL url = new URL("https://api.weixin.qq.com/cgi-bin/user/info/batchget?access_token=6_yAl2-g-cl-w4g_7PWW-tc9n26lGsfUUNEe-lHFSYSpzU8orWtPOqNDJ6LicjbKNijoAyxmoEu6Wcif4PL04fPQpsMNMmgLiqTAD5c_mxFnv1EkYNGTQU7GRDtzXuSCKCljMuCb9EKvyQ6TpJNEVeACAWNE");
+//            URL url = new URL("https://test123w.oss-cn-qingdao.aliyuncs.com/multipart.data?uploads");
 //            showInfo(url);
 
 //            readFromUrl(url);
@@ -28,9 +28,8 @@ public class RequestTest {
 
 //            urlConnectionReader(url);
 
-            HashMap<String, String> stringStringHashMap = new HashMap<>(1);
-            stringStringHashMap.put("type", "wb");
-            reverse(url, stringStringHashMap);
+            reverse(url,
+                    "{\"user_list\":[{\"openid\":\"onAOPw-3t8xBlqhcpKPn5SmsVyic\",\"lang\":\"zh_CN\"},{\"openid\":\"onAOPwwbTSJ4I8_UzjilMEpHNHLI\",\"lang\":\"zh_CN\"},{\"openid\":\"onAOPw1Ws8auDYRPyKP3ceG3SjO8\",\"lang\":\"zh_CN\"},{\"openid\":\"onAOPw0Ivj7tS34AvzWquIMwwwrs\",\"lang\":\"zh_CN\"},{\"openid\":\"onAOPw50bM77MgiJeMPm3JPG8hA8\",\"lang\":\"zh_CN\"},{\"openid\":\"onAOPw3AhGryO8NmaNUXxHlPM8is\",\"lang\":\"zh_CN\"},{\"openid\":\"onAOPw8j9xkCUt5KH1IqIaq-9Yw8\",\"lang\":\"zh_CN\"},{\"openid\":\"onAOPw622lyIzNwP0Ktmnr3Z6kdU\",\"lang\":\"zh_CN\"},{\"openid\":\"onAOPw6nlPrzBsxp8E0QxExm7jNw\",\"lang\":\"zh_CN\"},{\"openid\":\"onAOPw5OauKnnaCrGyba7KYEYjoo\",\"lang\":\"zh_CN\"},{\"openid\":\"onAOPwzboRYwkbmfpWUHee_cVlWY\",\"lang\":\"zh_CN\"},{\"openid\":\"onAOPw9o_8-AvUq8CvZ4Vnuz4JOU\",\"lang\":\"zh_CN\"}]}");
 
         } catch (IOException e) {
             e.printStackTrace();
@@ -38,23 +37,18 @@ public class RequestTest {
 
     }
 
-    private static void reverse(URL url, HashMap<String, String> param) {
+    private static void reverse(URL url, String param) {
         try {
-            Calendar cd = Calendar.getInstance();
-            SimpleDateFormat sdf = new SimpleDateFormat("EEE d MMM yyyy HH:mm:ss 'GMT'", Locale.US);
-            sdf.setTimeZone(TimeZone.getTimeZone("GMT")); // 设置时区为GMT
-            String str = sdf.format(cd.getTime());
-            System.out.println(str);
-
-//            Stream.of(param)
-
+            String str = getGMTTime();
+            
             URLConnection urlConnection = url.openConnection();
             HttpURLConnection httpURLConnection = (HttpURLConnection) urlConnection;
             httpURLConnection.setRequestProperty("Accept-Charset", StandardCharsets.UTF_8.name());
             httpURLConnection.setRequestProperty("Content-Type", "application/x-www-form-urlencoded");
             httpURLConnection.setRequestProperty("connection", "Keep-Alive");
-            httpURLConnection.setRequestProperty("Authorization", "OSS LTAIELdnUQGZOXRB:s90Q2D7WcmoPDQ/dYVv7oNykkWo=");
+//            httpURLConnection.setRequestProperty("Authorization", "OSS LTAIELdnUQGZOXRB:s90Q2D7WcmoPDQ/dYVv7oNykkWo=");
             httpURLConnection.setRequestProperty("Date", str);
+//            httpURLConnection.setRequestProperty("x-oss-date", str);
 //            httpURLConnection.setRequestProperty("Content-Length", "" + encodedStr.length());
             httpURLConnection.setConnectTimeout(3000);
             httpURLConnection.setUseCaches(true);
@@ -62,27 +56,41 @@ public class RequestTest {
 
             httpURLConnection.setDoOutput(true);
 
+            /*************************设置请求参数******************************/
             OutputStreamWriter streamWriter = new OutputStreamWriter(httpURLConnection.getOutputStream());
-            streamWriter.write("type=wb");
+            streamWriter.write(param);
             streamWriter.flush();
             streamWriter.close();
 
+            /*************************获取响应状态码*****************************/
             int responseCode = httpURLConnection.getResponseCode();
-            out.println(responseCode);
+            out.println("response code : " + responseCode);
+            String responseMessage = httpURLConnection.getResponseMessage();
+            out.println("response message : " + responseMessage);
             if (responseCode == 200) {
+                /*************************获取响应内容*****************************/
                 BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(httpURLConnection.getInputStream()));
+                out.print("response text : ");
                 bufferedReader.lines().forEach(out::println);
                 bufferedReader.close();
             } else {
-                String responseMessage = httpURLConnection.getResponseMessage();
-                System.out.println(responseMessage);
                 BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(httpURLConnection.getErrorStream()));
+                out.print("response error text : ");
                 bufferedReader.lines().forEach(out::println);
                 bufferedReader.close();
             }
         } catch (IOException e) {
             e.printStackTrace();
         }
+    }
+
+    private static String getGMTTime() {
+        Calendar cd = Calendar.getInstance();
+        SimpleDateFormat sdf = new SimpleDateFormat("EEE, d MMM yyyy HH:mm:ss 'GMT'", Locale.US);
+        sdf.setTimeZone(TimeZone.getTimeZone("GMT")); // 设置时区为GMT
+        String str = sdf.format(cd.getTime());
+        System.out.println(str);
+        return str;
     }
 
     private static void urlConnectionReader(URL url) {
