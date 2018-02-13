@@ -1,0 +1,147 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:mvc="http://www.springframework.org/schema/mvc"
+       xmlns:p="http://www.springframework.org/schema/p"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+         http://www.springframework.org/schema/beans/spring-beans.xsd
+        http://www.springframework.org/schema/mvc
+        http://www.springframework.org/schema/mvc/spring-mvc.xsd
+        http://www.springframework.org/schema/context
+         http://www.springframework.org/schema/context/spring-context.xsd">
+
+    <context:component-scan base-package="com.bmf">
+        <context:include-filter type="regex" expression=".err_handler.*" />
+        <context:include-filter type="regex" expression=".server.*" />
+        <context:include-filter type="regex" expression="mail.server.*" />
+    </context:component-scan>
+
+    <!--<bean id="multipartResolver" class="org.springframework.web.multipart.commons.CommonsMultipartResolver">-->
+    <!--<property name="maxUploadSize">-->
+    <!--<value>1000000</value>-->
+    <!--</property>-->
+    <!--<property name="defaultEncoding">-->
+    <!--<value>UTF-8</value>-->
+    <!--</property>-->
+    <!--</bean>-->
+
+    <!--异常处理-->
+    <!--<bean class="com.bmf.err_handle.ErrHandlerExceptionResolver" id="exceptionResolver" />-->
+
+    <!--文件处理器-->
+    <bean id="multipartResolver"
+          class="org.springframework.web.multipart.support.StandardServletMultipartResolver">
+        <property name="resolveLazily" value="true"/>
+    </bean>
+
+    <bean id="conversionService" class="org.springframework.format.support.FormattingConversionServiceFactoryBean">
+        <property name="converters">
+            <bean class="com.bmf.convert.DateConverter"/>
+        </property>
+    </bean>
+
+    <bean class="org.springframework.web.accept.ContentNegotiationManagerFactoryBean" id="negotiationManager">
+        <property name="mediaTypes">
+            <value>
+                json=application/json
+                xml=application/xml
+            </value>
+        </property>
+    </bean>
+
+
+    <bean id="messageSource"
+          class="org.springframework.context.support.ResourceBundleMessageSource">
+        <property name="basenames">
+            <list>
+                <value>messages/windows</value>
+            </list>
+        </property>
+    </bean>
+
+    <!-- 处理请求返回json字符串的中文乱码问题 -->
+    <mvc:annotation-driven enable-matrix-variables="true" conversion-service="conversionService"
+                           content-negotiation-manager="negotiationManager">
+        <mvc:message-converters>
+            <bean class="org.springframework.http.converter.StringHttpMessageConverter">
+                <constructor-arg value="UTF-8"/>
+                <property name="defaultCharset" value="UTF-8"/>
+                <property name="supportedMediaTypes">
+                    <list>
+                        <value>application/json;charset=UTF-8</value>
+                    </list>
+                </property>
+            </bean>
+        </mvc:message-converters>
+        <!--<mvc:path-matching-->
+        <!--suffix-pattern="true"-->
+        <!--trailing-slash="false"-->
+        <!--registered-suffixes-only="true"-->
+        <!--path-helper="pathHelper"-->
+        <!--path-matcher="pathMatcher"/>-->
+        <mvc:async-support default-timeout="3000"></mvc:async-support>
+    </mvc:annotation-driven>
+
+    <!--处理静态支援，如果DispatcherServlet发现请求的为静态资源，则把请求交给容器默认的Servlet处理-->
+    <mvc:default-servlet-handler/>
+
+    <!--静态资源缓存-->
+    <!--<mvc:resources mapping="/resources/**" location="/resources/,/WEB-INF/jsp/"-->
+    <!--cache-period="31556926">-->
+    <!--<mvc:cache-control max-age="3600" cache-public="true"/>-->
+    <!--<mvc:resource-chain resource-cache="true">-->
+    <!--<mvc:resolvers>-->
+    <!--<mvc:version-resolver>-->
+    <!--<mvc:content-version-strategy patterns="/**"/>-->
+    <!--</mvc:version-resolver>-->
+    <!--</mvc:resolvers>-->
+    <!--</mvc:resource-chain>-->
+    <!--</mvc:resources>-->
+
+    <!--对于没有业务逻辑的页面跳转-->
+    <mvc:view-controller path="/home" status-code="200" view-name="upload"/>
+    <mvc:view-controller path="/show" status-code="200" view-name="show"/>
+
+    <mvc:interceptors>
+        <mvc:interceptor>
+            <mvc:mapping path="/**"/>
+            <mvc:exclude-mapping path="/resources/**"/>
+            <bean class="com.bmf.interceptor.CommonInterceptor"/>
+        </mvc:interceptor>
+    </mvc:interceptors>
+
+
+    <!--<bean class="org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerMapping">-->
+    <!--<property name="interceptors">-->
+    <!--<list>-->
+    <!--<bean class="com.bmf.interceptor.CommonInterceptor"/>-->
+    <!--</list>-->
+    <!--</property>-->
+    <!--</bean>-->
+
+    <!--多视图资源解析器-->
+    <bean class="org.springframework.web.servlet.view.ContentNegotiatingViewResolver" p:order="1">
+        <property name="contentNegotiationManager" ref="negotiationManager"/>
+        <property name="viewResolvers">
+            <list>
+                <bean class="org.springframework.web.servlet.view.BeanNameViewResolver"/>
+                <ref bean="internalResourceViewResolver"/>
+            </list>
+        </property>
+        <property name="defaultViews">
+            <list>
+                <bean class="org.springframework.web.servlet.view.json.MappingJackson2JsonView"/>
+                <!--<bean class="org.springframework.web.servlet.view.xml.MappingJackson2XmlView" />-->
+            </list>
+        </property>
+    </bean>
+
+    <bean id="internalResourceViewResolver" class="org.springframework.web.servlet.view.InternalResourceViewResolver"
+          p:prefix="/WEB-INF/jsp/"
+          p:suffix=".jsp"
+          p:viewClass="org.springframework.web.servlet.view.JstlView"
+          p:contentType="text/html;charset=UTF-8"/>
+
+
+</beans>
