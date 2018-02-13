@@ -17,6 +17,7 @@ import org.springframework.context.ResourceLoaderAware;
 import org.springframework.core.io.ResourceLoader;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
+import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.TransactionStatus;
 import org.springframework.transaction.annotation.Isolation;
@@ -137,6 +138,7 @@ public class JdbcService implements BeanNameAware, BeanFactoryAware, BeanClassLo
                 .setTime(System.currentTimeMillis());
     }
 
+//    @Scheduled(cron = "")
     @Transactional(propagation = Propagation.REQUIRES_NEW, isolation = Isolation.DEFAULT, timeout = 3000, rollbackFor = {RuntimeException.class})
     private void updateJdbc() {
         int update = jdbcTemplate.update("update common_account.ac_feedback set feedbackContent = \"te555555555st\" where  feedbackId = 19;");

@@ -1,6 +1,8 @@
 package com.bmf.tools;
 
-public class Man {
+import java.io.Serializable;
+
+public class Man implements Serializable {
     private String firstName;
     private String lastName;
 
