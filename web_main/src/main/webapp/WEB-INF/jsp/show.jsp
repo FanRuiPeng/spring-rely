@@ -71,7 +71,7 @@ ${user.name}
 
     /**
      * 跨域请求
-     * 服务器daunt需要在响应中设置以下参数
+     * 服务器端需要在响应中设置以下参数
      * Access-Control-Allow-Origin: http://localhost 请求得来源
      * Access-Control-Allow-Credentials：true 允许客户端发送cookie
      * Access-Control-Allow-Method:‘*’ 用来列出浏览器的CORS请求会用到哪些HTTP方法
