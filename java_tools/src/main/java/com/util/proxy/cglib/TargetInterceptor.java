@@ -4,10 +4,10 @@ package com.util.proxy.cglib;
  * Created by BMF on 2018/2/12.
  */
 
-import java.lang.reflect.Method;
-
 import net.sf.cglib.proxy.MethodInterceptor;
 import net.sf.cglib.proxy.MethodProxy;
+
+import java.lang.reflect.Method;
 
 /**
  * 目标对象拦截器，实现MethodInterceptor

@@ -1,7 +1,5 @@
 package com.bmf.tools;
 
-import java.util.concurrent.*;
-
 /**
  * Created by BMF on 2017/7/22.
  */

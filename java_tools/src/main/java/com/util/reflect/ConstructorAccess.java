@@ -32,7 +32,7 @@ package com.util.reflect;
 
 import java.lang.reflect.Constructor;
 import java.lang.reflect.Modifier;
-import java.lang.reflect.Type;
+
 import static java.lang.System.out;
 
 public class ConstructorAccess {

@@ -32,8 +32,9 @@ package com.util.reflect;
 
 import java.lang.reflect.Constructor;
 import java.lang.reflect.Field;
-import java.lang.reflect.Method;
 import java.lang.reflect.Member;
+import java.lang.reflect.Method;
+
 import static java.lang.System.out;
 
 enum ClassMember { CONSTRUCTOR, FIELD, METHOD, CLASS, ALL }

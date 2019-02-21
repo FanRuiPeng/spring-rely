@@ -1,6 +1,6 @@
 package com.util.transient_test;
 
-import java.io.*;
+import java.io.Serializable;
 import java.util.ArrayDeque;
 import java.util.Queue;
 import java.util.concurrent.*;

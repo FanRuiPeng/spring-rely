@@ -6,7 +6,6 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import java.lang.management.ManagementFactory;
 import java.lang.management.MemoryMXBean;
-import java.lang.management.MemoryManagerMXBean;
 import java.lang.management.MemoryUsage;
 
 @Controller

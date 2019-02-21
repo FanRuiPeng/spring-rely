@@ -45,8 +45,15 @@
     <bean name="jdkSerializationRedisSerializer" primary="true"
           class="org.springframework.data.redis.serializer.JdkSerializationRedisSerializer"/>
 
-    <bean name="redisTemplate" class="org.springframework.data.redis.core.RedisTemplate"
-          p:connectionFactory-ref="jedisConnectionFactory"/>
+    <bean class="org.springframework.data.redis.serializer.StringRedisSerializer" id="stringRedisSerializer"/>
+
+    <bean class="org.springframework.data.redis.serializer.GenericJackson2JsonRedisSerializer"
+          id="genericJackson2JsonRedisSerializer"/>
+
+    <bean id="redisTemplate" class="org.springframework.data.redis.core.RedisTemplate"
+          p:keySerializer-ref="stringRedisSerializer"
+          p:valueSerializer-ref="genericJackson2JsonRedisSerializer"
+          p:connection-factory-ref="jedisConnectionFactory"/>
 
     <bean id="redisCacheManager" class="org.springframework.data.redis.cache.RedisCacheManager">
         <constructor-arg index="0" ref="redisTemplate"/>
@@ -57,5 +64,5 @@
     <bean class="com.bmf.tools.Child" id="child" parent="parent" p:single="ab"
           p:resource="http://zhuangdan.oss-cn-beijing.aliyuncs.com/video/shilian33tian.mp4"/>
 
-    <!--<bean class="com.bmf.test.InstantiationTracingBeanPostProcessor"/>-->
+    <!--<bean class="com.bmf.reentrantLockTest.InstantiationTracingBeanPostProcessor"/>-->
 </beans>

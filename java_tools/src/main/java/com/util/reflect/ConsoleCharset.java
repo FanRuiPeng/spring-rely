@@ -31,10 +31,11 @@ package com.util.reflect;
  */
 
 import java.io.Console;
-import java.nio.charset.Charset;
 import java.lang.reflect.Constructor;
 import java.lang.reflect.Field;
 import java.lang.reflect.InvocationTargetException;
+import java.nio.charset.Charset;
+
 import static java.lang.System.out;
 
 public class ConsoleCharset {

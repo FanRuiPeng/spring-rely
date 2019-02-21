@@ -1,6 +1,5 @@
 package com.bmf.mail.server;
 
-import com.bmf.mail.func.OrderManager;
 import com.bmf.mail.impl.MineHelperOrderManager;
 import com.bmf.mail.impl.MineOrderManager;
 import com.bmf.mail.impl.SpringOrderManager;

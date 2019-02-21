@@ -69,12 +69,12 @@
 
     //    $("#add").click(function () {
     //        $.ajax({
-    //            url:'/sv1/mvc/test',
+    //            url:'/sv1/mvc/reentrantLockTest',
     //            type:'post',
     //            contentType:"application/json",
     //            data:JSON.stringify({
     //                Id:1,
-    //                name:"test"
+    //                name:"reentrantLockTest"
     //            }),
     //            success:function (data) {
     //                console.log(data);
@@ -124,11 +124,11 @@
 
 //    $("#add").click(function () {
 //        $.ajax({
-//            url: '/sv1/mvc/page/{"Id":1,"name":"test"}',
+//            url: '/sv1/mvc/page/{"Id":1,"name":"reentrantLockTest"}',
 //            type: 'post',
 ////            data:JSON.stringify({
 ////                Id:1,
-////                name:"test"
+////                name:"reentrantLockTest"
 ////            }),
 //            success: function (data) {
 //                console.log(data);

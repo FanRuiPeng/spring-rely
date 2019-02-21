@@ -7,23 +7,23 @@ import java.lang.reflect.Proxy;
 /**
  * Created by BMF on 2017/8/22.
  */
-public class AnimalProxy implements InvocationHandler {
-    private Animal animal;
+public class DynamicProxy implements InvocationHandler {
+    private Object taget;
 
-    public AnimalProxy(Animal animal) {
-        this.animal = animal;
+    public DynamicProxy(Object taget) {
+        this.taget = taget;
     }
 
     public Object getProxy() {
         return Proxy.newProxyInstance(this.getClass().getClassLoader(),
-                animal.getClass().getInterfaces(),
+                taget.getClass().getInterfaces(),
                 this);
     }
 
     @Override
     public Object invoke(Object proxy, Method method, Object[] args) throws Throwable {
         System.out.println("代理方法开始执行");
-        Object invoke = method.invoke(animal, args);
+        Object invoke = method.invoke(taget, args);
         System.out.println("代理方法执行结束");
         return invoke;
     }

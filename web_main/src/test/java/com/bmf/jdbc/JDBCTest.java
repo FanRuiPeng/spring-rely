@@ -1,6 +1,6 @@
 package com.bmf.jdbc;
 
-import org.junit.jupiter.api.Test;
+import org.junit.Test;
 
 import java.sql.*;
 
@@ -10,6 +10,7 @@ public class JDBCTest {
     public void main() {
         try {
             Class.forName("com.mysql.jdbc.Driver");
+//            new com.mysql.jdbc.Driver();
             Connection connection = DriverManager.getConnection("jdbc:mysql://112.74.19.176:3500/za_forum?autoReconnect=true&amp;characterEncoding=utf8mb4",
                     "power_ad", "codespace0@#$");
             DatabaseMetaData metaData = connection.getMetaData();

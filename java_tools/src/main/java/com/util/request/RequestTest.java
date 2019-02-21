@@ -1,13 +1,19 @@
 package com.util.request;
 
-import java.io.*;
-import java.net.*;
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.io.OutputStreamWriter;
+import java.net.HttpURLConnection;
+import java.net.URL;
+import java.net.URLConnection;
 import java.nio.charset.StandardCharsets;
 import java.text.SimpleDateFormat;
-import java.util.*;
-import java.util.stream.Stream;
+import java.util.Calendar;
+import java.util.Locale;
+import java.util.TimeZone;
 
-import static java.lang.System.*;
+import static java.lang.System.out;
 
 /**
  * Created by BMF on 2018/1/26.

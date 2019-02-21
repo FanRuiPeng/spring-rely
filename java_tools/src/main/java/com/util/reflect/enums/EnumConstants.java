@@ -32,6 +32,7 @@ package com.util.reflect.enums;
 
 import java.lang.annotation.RetentionPolicy;
 import java.util.Arrays;
+
 import static java.lang.System.out;
 
 enum Eon { HADEAN, ARCHAEAN, PROTEROZOIC, PHANEROZOIC }

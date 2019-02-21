@@ -1,6 +1,7 @@
 package com.bmf.server;
 
 import com.bmf.tools.RedisTool;
+import com.bmf.tools.SeckillTest;
 import com.util.calculate.Calculate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -20,6 +21,9 @@ public class RedisTest {
     @Autowired
     private RedisTool redisTool;
 
+    @Autowired
+    private SeckillTest seckillTest;
+
     @RequestMapping("/put")
     @ResponseBody
     public Object put(String key, String value, Long time) {
@@ -29,6 +33,7 @@ public class RedisTest {
     @RequestMapping("/get")
     @ResponseBody
     public Object get(String a) {
+        seckillTest.testRedis();
         return redisTool.get(a);
     }
 

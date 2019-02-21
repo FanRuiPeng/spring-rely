@@ -3,15 +3,30 @@
        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:p="http://www.springframework.org/schema/p"
        xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
 
-<!-- Jedis ConnectionFactory -->
-<bean id="jedisConnectionFactory"
-      class="org.springframework.data.redis.connection.jedis.JedisConnectionFactory"
-      p:hostName="192.168.0.12" p:port="6379" p:usePool="true" p:database="0"/>
+    <bean class="redis.clients.jedis.JedisPoolConfig" id="jedisPoolConfig"
+          p:maxTotal="2000"
+          p:maxWaitMillis="300"
+          p:minIdle="100"
+          p:maxIdle="500"
+          p:testOnBorrow="true"/>
+
+    <!-- Jedis ConnectionFactory -->
+    <bean id="jedisConnectionFactory"
+          class="org.springframework.data.redis.connection.jedis.JedisConnectionFactory"
+          p:hostName="112.74.19.176" p:port="6300" p:password="codespace0123HWiemri230xo43ie_________________"
+          p:usePool="true" p:database="2" p:poolConfig-ref="jedisPoolConfig"/>
 
     <bean id="redisTemplate" class="org.springframework.data.redis.core.RedisTemplate"
           p:connection-factory-ref="jedisConnectionFactory"/>
 
+    <bean class="org.springframework.data.redis.serializer.StringRedisSerializer" id="stringRedisSerializer"/>
+
+    <bean class="org.springframework.data.redis.serializer.GenericJackson2JsonRedisSerializer"
+          id="genericJackson2JsonRedisSerializer"/>
+
     <bean id="stringRedisTemplate" class="org.springframework.data.redis.core.StringRedisTemplate"
+          p:keySerializer-ref="stringRedisSerializer"
+          p:valueSerializer-ref="genericJackson2JsonRedisSerializer"
           p:connection-factory-ref="jedisConnectionFactory"/>
 
 </beans>

@@ -1,6 +1,5 @@
 package com.bmf.test;
 
-import com.bmf.tools.Man;
 import org.junit.Test;
 
 import java.lang.management.*;

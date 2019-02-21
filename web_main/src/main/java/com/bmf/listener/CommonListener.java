@@ -8,9 +8,10 @@ import org.springframework.web.context.ContextLoaderListener;
 
 import javax.servlet.ServletContext;
 import javax.servlet.ServletContextEvent;
-import java.io.*;
-import java.util.Enumeration;
-import java.util.Properties;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.io.InputStream;
 
 /**
  * Created by BMF on 2017/8/20.

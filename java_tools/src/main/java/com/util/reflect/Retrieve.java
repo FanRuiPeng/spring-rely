@@ -1,10 +1,7 @@
 package com.util.reflect;
 
-import java.io.Console;
-import java.util.Collection;
 import java.util.HashSet;
 import java.util.Set;
-import java.util.stream.Stream;
 
 public class Retrieve {
 

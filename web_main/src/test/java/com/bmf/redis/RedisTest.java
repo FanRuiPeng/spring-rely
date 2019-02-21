@@ -1,6 +1,5 @@
 package com.bmf.redis;
 
-import com.bmf.tools.Man;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,7 +15,6 @@ import org.springframework.test.context.junit4.SpringRunner;
 import javax.annotation.Resource;
 import java.util.List;
 import java.util.Map;
-import java.util.Set;
 
 @ContextConfiguration("/config/redis.xml")
 @RunWith(SpringRunner.class)

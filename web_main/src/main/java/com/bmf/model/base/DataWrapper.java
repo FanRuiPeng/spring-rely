@@ -1,7 +1,6 @@
 package com.bmf.model.base;
 
 import java.io.Serializable;
-import java.time.LocalDateTime;
 
 /**
  * Created by BMF on 2017/8/26.

@@ -11,17 +11,17 @@ import net.sf.cglib.proxy.NoOp;
 public class TestCglib {
 
     public static void main(String[] args) {
-//        obj();
-//        interfaces();
-        LazyBean bean = new LazyBean("张三", 66);
-        int age = bean.getAge();
-//        System.out.println(age);
-        PropertyBean propertyBean = bean.getPropertyBean();
-        PropertyBean propertyBeanDispatcher = bean.getPropertyBeanDispatcher();
-        String key = propertyBean.getKey();
-        String key1 = propertyBeanDispatcher.getKey();
-        propertyBean.getKey();
-        propertyBeanDispatcher.getKey();
+        obj();
+////        interfaces();
+//        LazyBean bean = new LazyBean("张三", 66);
+//        int age = bean.getAge();
+////        System.out.println(age);
+//        PropertyBean propertyBean = bean.getPropertyBean();
+//        PropertyBean propertyBeanDispatcher = bean.getPropertyBeanDispatcher();
+//        String key = propertyBean.getKey();
+//        String key1 = propertyBeanDispatcher.getKey();
+//        propertyBean.getKey();
+//        propertyBeanDispatcher.getKey();
     }
 
     private static void obj() {

@@ -5,7 +5,6 @@ import sun.misc.ProxyGenerator;
 import java.io.FileOutputStream;
 import java.lang.reflect.InvocationHandler;
 import java.lang.reflect.Method;
-import java.lang.reflect.Proxy;
 
 /**
  * Created by BMF on 2017/8/22.
@@ -13,10 +12,10 @@ import java.lang.reflect.Proxy;
 public class TestProxy {
 
     public static void main(String[] args) {
-//        AnimalProxy animalProxy = new AnimalProxy(AnimalEnum.valueOf("dog").getAnimal());
-//        Animal proxy = (Animal) animalProxy.getProxy();
-//        proxy.eat();
-//        proxy.run();
+        DynamicProxy dynamicProxy = new DynamicProxy(AnimalEnum.valueOf("dog").getAnimal());
+        Animal proxy = (Animal) dynamicProxy.getProxy();
+        proxy.eat();
+        proxy.run();
 
 //        Class<Animal>[] classes = new Class[]{Animal.class};
 //        Object instance = Proxy.newProxyInstance(TestProxy.class.getClassLoader(), classes, new InnerHandler(AnimalEnum.dog.getAnimal()));
@@ -25,11 +24,11 @@ public class TestProxy {
 //        animal.run();
 //        animal.eat();
 
-        Class[] classes = {BaseSum.class};
-        Object o = Proxy.newProxyInstance(ClassLoader.getSystemClassLoader(), classes, new SumHandler(new SumImpl(1)));
-        BaseSum o1 = (BaseSum) o;
-        int show = o1.sum(2).sum(3).show();
-        System.out.println(show);
+//        Class[] classes = {BaseSum.class};
+//        Object o = Proxy.newProxyInstance(ClassLoader.getSystemClassLoader(), classes, new SumHandler(new SumImpl(1)));
+//        BaseSum o1 = (BaseSum) o;
+//        int show = o1.sum(2).sum(3).show();
+//        System.out.println(show);
 
     }
 

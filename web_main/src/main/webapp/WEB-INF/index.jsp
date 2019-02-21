@@ -12,6 +12,6 @@
 </head>
 <body>
 ${requestScope.func}
-this is a page to be test
+this is a page to be reentrantLockTest
 </body>
 </html>

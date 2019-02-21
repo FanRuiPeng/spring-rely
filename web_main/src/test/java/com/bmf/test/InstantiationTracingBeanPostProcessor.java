@@ -1,7 +1,6 @@
 package com.bmf.test;
 
 import com.bmf.tools.Child;
-import com.bmf.tools.Parent;
 import org.springframework.beans.BeansException;
 import org.springframework.beans.factory.config.BeanPostProcessor;
 

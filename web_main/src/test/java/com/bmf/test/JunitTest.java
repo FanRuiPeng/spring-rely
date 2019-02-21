@@ -3,32 +3,16 @@ package com.bmf.test;
 import com.aliyun.oss.OSSClient;
 import com.aliyun.oss.common.auth.ServiceSignature;
 import com.aliyun.oss.common.comm.RequestMessage;
-import com.aliyun.oss.common.utils.BinaryUtil;
-import com.aliyun.oss.internal.OSSRequestSigner;
 import com.aliyun.oss.internal.SignUtils;
 import com.aliyun.oss.model.InitiateMultipartUploadRequest;
-import com.aliyun.oss.model.MatchMode;
-import com.aliyun.oss.model.ObjectMetadata;
-import com.aliyun.oss.model.PolicyConditions;
-import com.bmf.tools.Man;
-import com.bmf.tools.SubMan;
 import com.bmf.tools.Week;
-import it.sauronsoftware.jave.Encoder;
 import it.sauronsoftware.jave.EncoderException;
-import it.sauronsoftware.jave.MultimediaInfo;
-import net.sf.json.JSONObject;
 import org.junit.Test;
-import org.springframework.core.io.Resource;
-import org.springframework.core.io.UrlResource;
 
-import java.io.File;
 import java.io.IOException;
-import java.net.MalformedURLException;
-import java.net.URL;
 import java.text.SimpleDateFormat;
 import java.util.*;
 import java.util.concurrent.Executors;
-import java.util.stream.Stream;
 
 public class JunitTest {
 

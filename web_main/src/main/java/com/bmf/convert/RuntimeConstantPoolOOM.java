@@ -1,8 +1,6 @@
 package com.bmf.convert;
 
 
-import java.util.ArrayList;
-
 /**
  * Created by BMF on 2017/8/12.
  */

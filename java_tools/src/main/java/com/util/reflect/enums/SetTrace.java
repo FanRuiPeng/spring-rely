@@ -31,6 +31,7 @@ package com.util.reflect.enums;
  */
 
 import java.lang.reflect.Field;
+
 import static java.lang.System.out;
 
 enum TraceLevel { OFF, LOW, MEDIUM, HIGH, DEBUG }

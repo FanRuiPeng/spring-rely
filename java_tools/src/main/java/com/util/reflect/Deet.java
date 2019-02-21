@@ -34,8 +34,9 @@ import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.lang.reflect.Type;
 import java.util.Locale;
-import static java.lang.System.out;
+
 import static java.lang.System.err;
+import static java.lang.System.out;
 
 public class Deet<T> {
     private boolean testDeet(Locale l) {

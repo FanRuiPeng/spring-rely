@@ -3,10 +3,7 @@ package com.util.enum_set;
 import java.io.IOException;
 import java.net.URISyntaxException;
 import java.net.URL;
-import java.util.EnumMap;
-import java.util.EnumSet;
 import java.util.Enumeration;
-import java.util.Iterator;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 

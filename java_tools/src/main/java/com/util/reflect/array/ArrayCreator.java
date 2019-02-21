@@ -3,9 +3,9 @@ package com.util.reflect.array;
 import java.lang.reflect.Array;
 import java.lang.reflect.Constructor;
 import java.lang.reflect.InvocationTargetException;
-import java.util.regex.Pattern;
-import java.util.regex.Matcher;
 import java.util.Arrays;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import static java.lang.System.out;
 

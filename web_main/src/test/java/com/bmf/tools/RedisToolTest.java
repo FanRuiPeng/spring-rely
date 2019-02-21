@@ -1,23 +1,19 @@
 package com.bmf.tools;
 
-import org.junit.Test;
-import org.junit.Before;
+import com.bmf.func.TestBeanInterface;
 import org.junit.After;
+import org.junit.Before;
+import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.MessageSource;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
-import org.springframework.data.redis.core.BoundHashOperations;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.test.annotation.DirtiesContext;
-import org.springframework.test.context.TestPropertySource;
 import org.springframework.test.context.junit4.SpringRunner;
-import com.bmf.func.TestBeanInterface;
 
-import java.util.Enumeration;
 import java.util.Locale;
-import java.util.Properties;
 
 /**
  * RedisTool Tester.
@@ -57,7 +53,7 @@ public class RedisToolTest {
     @Test
     @DirtiesContext(methodMode = DirtiesContext.MethodMode.BEFORE_METHOD)
     public void testPut() throws Exception {
-//TODO: Test goes here...
+//TODO: ReentrantLockTest goes here...
 
 //        child.get();
         System.out.println("----------------"+ child.getResource().getFilename());
@@ -87,7 +83,7 @@ public class RedisToolTest {
      */
     @Test
     public void testGet() throws Exception {
-//TODO: Test goes here... 
+//TODO: ReentrantLockTest goes here...
     }
 
     /**
@@ -95,7 +91,7 @@ public class RedisToolTest {
      */
     @Test
     public void testGetKey() throws Exception {
-//TODO: Test goes here... 
+//TODO: ReentrantLockTest goes here...
     }
 
     /**
@@ -103,7 +99,7 @@ public class RedisToolTest {
      */
     @Test
     public void testSetKey() throws Exception {
-//TODO: Test goes here... 
+//TODO: ReentrantLockTest goes here...
     }
 
     /**
@@ -111,7 +107,7 @@ public class RedisToolTest {
      */
     @Test
     public void testGetValue() throws Exception {
-//TODO: Test goes here... 
+//TODO: ReentrantLockTest goes here...
     }
 
     /**
@@ -119,7 +115,7 @@ public class RedisToolTest {
      */
     @Test
     public void testSetValue() throws Exception {
-//TODO: Test goes here... 
+//TODO: ReentrantLockTest goes here...
     }
 
     /**
@@ -127,7 +123,7 @@ public class RedisToolTest {
      */
     @Test
     public void testEquals() throws Exception {
-//TODO: Test goes here... 
+//TODO: ReentrantLockTest goes here...
     }
 
     /**
@@ -135,7 +131,7 @@ public class RedisToolTest {
      */
     @Test
     public void testHashCode() throws Exception {
-//TODO: Test goes here... 
+//TODO: ReentrantLockTest goes here...
     }
 
     /**
@@ -143,7 +139,7 @@ public class RedisToolTest {
      */
     @Test
     public void testToString() throws Exception {
-//TODO: Test goes here... 
+//TODO: ReentrantLockTest goes here...
     }
 
     /**
@@ -151,7 +147,7 @@ public class RedisToolTest {
      */
     @Test
     public void testExecuteOperations() throws Exception {
-//TODO: Test goes here... 
+//TODO: ReentrantLockTest goes here...
     }
 
 

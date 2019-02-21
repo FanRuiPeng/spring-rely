@@ -95,8 +95,15 @@
     <bean name="jdkSerializationRedisSerializer"
           class="org.springframework.data.redis.serializer.JdkSerializationRedisSerializer"/>
 
-    <bean name="redisTemplate" class="org.springframework.data.redis.core.RedisTemplate"
-          p:connectionFactory-ref="jedisConnectionFactory"/>
+    <bean class="org.springframework.data.redis.serializer.StringRedisSerializer" id="stringRedisSerializer"/>
+
+    <bean class="org.springframework.data.redis.serializer.GenericJackson2JsonRedisSerializer"
+          id="genericJackson2JsonRedisSerializer"/>
+
+    <bean id="redisTemplate" class="org.springframework.data.redis.core.RedisTemplate"
+          p:keySerializer-ref="stringRedisSerializer"
+          p:valueSerializer-ref="genericJackson2JsonRedisSerializer"
+          p:connection-factory-ref="jedisConnectionFactory"/>
 
     <bean id="redisCacheManager" class="org.springframework.data.redis.cache.RedisCacheManager">
         <constructor-arg index="0" ref="redisTemplate"/>

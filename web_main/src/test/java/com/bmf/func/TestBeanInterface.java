@@ -1,6 +1,5 @@
 package com.bmf.func;
 
-import org.springframework.context.annotation.EnableAspectJAutoProxy;
 import org.springframework.test.context.ContextConfiguration;
 
 import java.lang.annotation.ElementType;
